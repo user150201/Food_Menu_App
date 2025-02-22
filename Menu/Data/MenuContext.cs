@@ -27,7 +27,7 @@ namespace Menu.Data
             modelBuilder.Entity<DishIngrediant>()
                 .HasOne(i => i.Ingrediant)
                 .WithMany(di => di.DishIngrediants)
-                .HasForeignKey(i => i.DishId);
+                .HasForeignKey(i => i.IngrediantId);
 
             modelBuilder.Entity<Dish>().HasData(
                 new Dish { Id = 1, Name = "Margheritta", Price = 7.50, ImageUrl = "https://cdn.shopify.com/s/files/1/0274/9503/9079/files/20220211142754-margherita-9920_5a73220e-4a1a-4d33-b38f-26e98e3cd986.jpg?v=1723650067" });
