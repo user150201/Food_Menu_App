@@ -20,3 +20,12 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.bg-image {
+    background: url('/images/pizza_background2.jpg') no-repeat center center;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
