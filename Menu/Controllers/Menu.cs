@@ -45,5 +45,11 @@ namespace Menu.Controllers
 
             return View(dish);
         }
+
+        public IActionResult Plate()
+        {
+            return View();
+        }
+
     }
 }
