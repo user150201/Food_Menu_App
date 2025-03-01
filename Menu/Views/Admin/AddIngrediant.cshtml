@@ -4,16 +4,34 @@
     ViewData["Title"] = "Add New Ingredient";
 }
 
-<h2>Add New Ingredient</h2>
+<div class="container d-flex justify-content-center align-items-sm-start vh-100">
+    <div class="card shadow-lg border-0 rounded-4 p-4 w-50">
+        <div class="card-body">
+            <!-- Title -->
+            <h2 class="text-center text-dark mb-4">Add New Ingredient</h2>
 
-<form asp-action="AddIngrediant" method="post">
-    <div class="form-group">
-        <label asp-for="Name" class="control-label"></label>
-        <input asp-for="Name" class="form-control" required />
-        <span asp-validation-for="Name" class="text-danger"></span>
+            <!-- Form -->
+            <form asp-action="AddIngrediant" method="post">
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label ">Ingredient Name:</label>
+                    <input asp-for="Name" class="form-control border-secondary" required />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-center mt-3">
+                    <button type="submit" class="btn btn-success px-4 py-2 rounded shadow-sm">
+                         Add Ingredient
+                    </button>
+                </div>
+            </form>
+
+            <!-- Back to Menu Button -->
+            <div class="text-center mt-3">
+                <a class="btn btn-outline-primary rounded px-4 py-2" asp-controller="Menu" asp-action="Index">
+                     View Menu
+                </a>
+            </div>
+        </div>
     </div>
-
-    <button type="submit" class="btn btn-primary mt-2">Add Ingredient</button>
-</form>
-
-<a asp-action="LinkIngredients">Back to Link Ingredients</a>
+</div>
