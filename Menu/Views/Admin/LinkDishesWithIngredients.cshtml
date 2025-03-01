@@ -1,0 +1,36 @@
+﻿@model dynamic
+@{
+    ViewData["Title"] = "Link Dishes with Ingredients";
+}
+
+<h2>Link Dishes with Ingredients</h2>
+
+<form asp-action="LinkDishesWithIngredients" method="post">
+    <div class="form-group">
+        <label for="DishId">Select Dish:</label>
+        <select name="DishId" class="form-control" required>
+            <option value="">-- Select Dish --</option>
+            @foreach (var dish in ViewBag.Dishes)
+            {
+                <option value="@dish.Id">@dish.Name</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group mt-3">
+        <label>Select Ingredients:</label>
+        <br />
+        @foreach (var ingredient in ViewBag.Ingredients)
+
+        {
+            <div class="form-check">
+                <input type="checkbox" name="SelectedIngredients" value="@ingredient.Id" class="form-check-input">
+                <label class="form-check-label">@ingredient.Name</label>
+            </div>
+        }
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Link Ingredients</button>
+</form>
+
+<a asp-action="Index" asp-controller="Menu">Back to Menu</a>

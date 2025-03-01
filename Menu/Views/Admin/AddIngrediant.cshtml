@@ -1,0 +1,19 @@
+﻿@model Menu.Models.Ingrediant
+
+@{
+    ViewData["Title"] = "Add New Ingredient";
+}
+
+<h2>Add New Ingredient</h2>
+
+<form asp-action="AddIngrediant" method="post">
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name" class="form-control" required />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Add Ingredient</button>
+</form>
+
+<a asp-action="LinkIngredients">Back to Link Ingredients</a>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Menu.Data;
 using Menu.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Menu.Controllers
 {
@@ -19,6 +20,8 @@ namespace Menu.Controllers
             return View();
         }
 
+
+
         [HttpPost]
         public IActionResult Add(Dish dish)
         {
@@ -30,5 +33,60 @@ namespace Menu.Controllers
             }
             return View(dish);
         }
+
+
+
+
+
+
+
+        [HttpGet]
+        public IActionResult AddIngrediant()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddIngrediant(Ingrediant ingrediant)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Ingrediants.Add(ingrediant);
+                _context.SaveChanges();
+                return RedirectToAction("Index", "Menu"); // Redirect to MenuController's Index action
+            }
+            return View(ingrediant);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> LinkDishesWithIngredients()
+        {
+            ViewBag.Dishes = await _context.Dishes.ToListAsync();
+            ViewBag.Ingredients = await _context.Ingrediants.ToListAsync();
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LinkDishesWithIngredients(int DishId, List<int> SelectedIngredients)
+        {
+            if (SelectedIngredients == null || !SelectedIngredients.Any())
+            {
+                ModelState.AddModelError("", "Please select at least one ingredient.");
+                return RedirectToAction("LinkDishesWithIngredients");
+            }
+
+            foreach (var ingId in SelectedIngredients)
+            {
+                var dishIngredient = new DishIngrediant { DishId = DishId, IngrediantId = ingId };
+                _context.DishIngrediants.Add(dishIngredient);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Menu"); // Redirect to menu listing
+        }
+
+
+
     }
 }
