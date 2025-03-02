@@ -54,9 +54,9 @@ namespace Menu.Controllers
             {
                 _context.Ingrediants.Add(ingrediant);
                 _context.SaveChanges();
-                return RedirectToAction("Index", "Menu"); // Redirect to MenuController's Index action
             }
-            return View(ingrediant);
+            return View("AddIngrediant");
+
         }
 
         [HttpGet]
