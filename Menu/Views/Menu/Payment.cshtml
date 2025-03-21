@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Payment";
+    var upiId = "gokulktm499@oksbi"; // Replace with your UPI ID
+    var totalAmount = ViewBag.TotalAmount ?? 0.0; // Ensure it's never null
+    var upiLink = $"upi://pay?pa={upiId}&pn=YourName&tr=Order{Guid.NewGuid()}&tn=Payment%20for%20Order&am={totalAmount}&cu=INR";
+    var qrCodeUrl = $"https://quickchart.io/qr?text={Uri.EscapeDataString(upiLink)}&size=250";
+}
+
+<div class="container text-center mt-5">
+    <h2>Scan to Pay with Google Pay</h2>
+    <p>Total Amount: <strong>₹@totalAmount</strong></p>
+
+    <p>QR Code URL: <a href="@qrCodeUrl" target="_blank">@qrCodeUrl</a></p>
+
+    <img src="@qrCodeUrl" alt="Google Pay QR Code" class="mt-3" />
+
+    <p class="mt-3">
+        <a href="@upiLink" class="btn btn-primary btn-lg">Pay with Google Pay</a>
+    </p>
+</div>

@@ -1,9 +1,33 @@
-﻿@{
-    ViewData["Title"] = "Your Plate";
-}
-
-<div class="container text-center mt-5">
+﻿@model List<CartItem>
+<div class="container mt-4">
     <h2>Your Plate</h2>
-    <p class="text-muted">Your plate is currently empty.</p>
-    <a asp-controller="Menu" asp-action="Index" class="btn btn-primary">Browse Menu</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Dish</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Price.ToString("N2")</td>
+                    <td>@item.Quantity</td>
+                    <td>@((item.Price * item.Quantity).ToString("N2"))</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+
+    <a asp-action="Payment" asp-controller="Cart" asp-route-totalPrice="@(Model.Sum(x => x.Price * x.Quantity))"
+       class="btn btn-primary fixed-bottom-right">
+        Checkout
+    </a>
+
 </div>

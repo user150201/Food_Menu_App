@@ -55,8 +55,7 @@ namespace Menu.Controllers
                 _context.Ingrediants.Add(ingrediant);
                 _context.SaveChanges();
             }
-            return View("AddIngrediant");
-
+            return View(ingrediant);
         }
 
         [HttpGet]

@@ -5,6 +5,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
+
 
 builder.Services.AddDbContext<MenuContext>(options=>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
@@ -21,6 +24,9 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseSession();
+
 
 app.UseRouting();
 
