@@ -5,9 +5,11 @@
         <thead>
             <tr>
                 <th>Dish</th>
+                <th>Image</th>
                 <th>Price</th>
                 <th>Quantity</th>
                 <th>Total</th>
+                <th>Action</th> <!-- Add Action Column -->
             </tr>
         </thead>
         <tbody>
@@ -15,19 +17,27 @@
             {
                 <tr>
                     <td>@item.Name</td>
-                    <td>@item.Price.ToString("N2")</td>
+                    <td>
+                        <img src="@item.ImageUrl" alt="@item.Name" class="img-fluid" style="width: 60px; height: 60px; object-fit: cover;" />
+                    </td>
+                    <td>₹@item.Price.ToString("N2")</td>
                     <td>@item.Quantity</td>
-                    <td>@((item.Price * item.Quantity).ToString("N2"))</td>
+                    <td>₹@((item.Price * item.Quantity).ToString("N2"))</td>
+                    <td>
+                        <form asp-action="RemoveFromCart" asp-controller="Cart" method="post">
+                            <input type="hidden" name="dishId" value="@item.DishId" />
+                            <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                        </form>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
-
-
-
-    <a asp-action="Payment" asp-controller="Cart" asp-route-totalPrice="@(Model.Sum(x => x.Price * x.Quantity))"
+    <div class="text-right mt-3">
+        <h4>Total Price: <strong>₹@Model.Sum(x => x.Price * x.Quantity).ToString("N2")</strong></h4>
+    </div>
+    <a asp-action="Payment" asp-controller="Cart" asp-route-totalPrice="@Model.Sum(x => x.Price * x.Quantity)"
        class="btn btn-primary fixed-bottom-right">
         Checkout
     </a>
-
 </div>
