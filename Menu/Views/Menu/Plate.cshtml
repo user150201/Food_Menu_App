@@ -9,7 +9,7 @@
                 <th>Price</th>
                 <th>Quantity</th>
                 <th>Total</th>
-                <th>Action</th> <!-- Add Action Column -->
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -33,11 +33,44 @@
             }
         </tbody>
     </table>
-    <div class="text-right mt-3">
-        <h4>Total Price: <strong>₹@Model.Sum(x => x.Price * x.Quantity).ToString("N2")</strong></h4>
+
+    <!-- Coupon Section -->
+    <div class="mt-3">
+        <label for="couponCode">Enter Coupon Code:</label>
+        <input type="text" id="couponCode" class="form-control w-25 d-inline" />
+        <button class="btn btn-success" onclick="applyCoupon()">Apply</button>
     </div>
-    <a asp-action="Payment" asp-controller="Cart" asp-route-totalPrice="@Model.Sum(x => x.Price * x.Quantity)"
+
+    <!-- Display Total Price -->
+    <div class="text-right mt-3">
+        <h4>Original Price: <strong>₹<span id="originalPrice">@Model.Sum(x => x.Price * x.Quantity).ToString("N2")</span></strong></h4>
+        <h4>Discounted Price: <strong>₹<span id="discountedPrice">@Model.Sum(x => x.Price * x.Quantity).ToString("N2")</span></strong></h4>
+    </div>
+
+    <!-- Checkout Button -->
+    <a id="checkoutBtn" asp-action="Payment" asp-controller="Cart" asp-route-totalPrice="@Model.Sum(x => x.Price * x.Quantity)"
        class="btn btn-primary fixed-bottom-right">
         Checkout
     </a>
 </div>
+
+<script>
+    function applyCoupon() {
+        var couponCode = document.getElementById("couponCode").value.trim();
+        var originalPrice = parseFloat(document.getElementById("originalPrice").innerText);
+
+        // Define valid coupons
+        var validCoupons = ["DISCOUNT50", "HALFOFF", "SAVE50"];
+
+        if (validCoupons.includes(couponCode.toUpperCase())) {
+            var discountedPrice = originalPrice * 0.5; // 50% discount
+            document.getElementById("discountedPrice").innerText = discountedPrice.toFixed(2);
+
+            // Update checkout button with new discounted price
+            var checkoutBtn = document.getElementById("checkoutBtn");
+            checkoutBtn.href = checkoutBtn.href.split('?')[0] + "?totalPrice=" + discountedPrice.toFixed(2);
+        } else {
+            alert("Invalid coupon code! Please try again.");
+        }
+    }
+</script>
